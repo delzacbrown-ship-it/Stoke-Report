@@ -43,3 +43,5 @@ df_summary['Scaled_Opportunaties_Rate'] = round(100*df_summary.Scaled_Opportunat
 
 
 print(df_summary)
+
+df_summary.to_csv('stoke_campaign_summary.csv')
