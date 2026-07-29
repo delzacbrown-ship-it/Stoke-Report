@@ -22,7 +22,24 @@ df1['Campaign'] = 'A'
 df2['Campaign'] = 'B'
 df3['Campaign'] = 'C'
 
+leads_dict = {'A': 799, 'B': 334, 'C': 333}
+Pre_Scaled_Leads = {'A': 332, 'B': 334, 'C': 333}
+Pre_Scaled_Opportunaties = {'A': 10, 'B': 8, 'C': 4}
+Scaled_Opportunaties = {'A': 29, 'B': 14, 'C': 6}
 
 df_merged = pd.concat([df1,df2,df3])
 
 print(df_merged)
+
+df_summary = df_merged.groupby('Campaign')[['Sent', 'Replied' ]].sum()
+df_summary['Leads'] = df_summary.index.map(leads_dict)
+df_summary['Pre_Scaled_Leads'] = df_summary.index.map(Pre_Scaled_Leads)
+df_summary['Pre_Scaled_Opportunaties'] = df_summary.index.map(Pre_Scaled_Opportunaties)
+df_summary['Scaled_Opportunaties'] = df_summary.index.map(Scaled_Opportunaties)
+
+df_summary['Leads_Reply_Rate'] = round(100*df_summary.Replied/df_summary.Leads, 2)
+df_summary['Pre_Scaled_Opportunaties_Rate'] = round(100*df_summary.Pre_Scaled_Opportunaties/df_summary.Pre_Scaled_Leads, 2)
+df_summary['Scaled_Opportunaties_Rate'] = round(100*df_summary.Scaled_Opportunaties/df_summary.Leads, 2)
+
+
+print(df_summary)
